@@ -1,26 +1,36 @@
-module filter(
-    input signed[7:0]data,
+module fir_filter(
+    input signed[7:0]input_data,
     input clk,
     input input_data_flag,
 
     output reg done_flag = 1,
-    output reg signed [31:0]sum = 0
+    output reg signed [31:0]result = 0
 );
 
-reg signed [31:0]sum_tmp = 0;
+reg signed [31:0]sum_internal = 0;
 
-reg signed [7:0] buff1 = 1;
-reg signed [7:0] buff2 = 2;
-reg signed [7:0] buff3 = 3;
+reg signed [7:0] data[2:0];
 
+integer i;
+initial begin
+    for (i = 0; i < 3; i = i + 1)
+        begin
+            data[i] = 0;
+        end
+end
+
+
+reg idx = 0;
 always @(posedge clk)
 begin
     if (input_data_flag == 1'b1)
         begin
             done_flag <= 0;
-            buff3 <= buff2;
-            buff2 <= buff1;
-            buff1 <= data;
+            for (idx = 2; idx >= 0; idx--)
+                if(idx != 0)
+                    data[idx - 1] = data[idx];
+                else
+                    data[idx] = input_data;
         end
 end
 
@@ -39,9 +49,9 @@ always@(posedge clk)
         d4 <= d3;
         d5 <= d4;
 
-        buff <= d1 ? buff1 :
-                d2 ? buff2 : 
-                d3 ? buff3 : buff;
+        buff <= d1 ? data[0] :
+                d2 ? data[1] : 
+                d3 ? data[2] : buff;
         coef <= d1 ? 2 :
                 d2 ? 4 : 
                 d3 ? 8 : coef;
@@ -59,19 +69,19 @@ always@(posedge clk)
 always@(posedge clk)
     begin
         if(input_data_flag == 1'b1)
-            sum_tmp <= 0;
+            sum_internal <= 0;
         else if (!done_flag && !d5)
-            sum_tmp <= sum_tmp + mult;
+            sum_internal <= sum_internal + mult;
     end
 
 always @(posedge clk)
 begin
     if (done_flag)
     begin
-        sum_tmp <= 0;
+        sum_internal <= 0;
     end
-    if(sum_tmp != 0)
-        sum <= sum_tmp;
+    if(sum_internal != 0)
+        result <= sum_internal;
 end
 
 endmodule

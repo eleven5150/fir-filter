@@ -1,10 +1,10 @@
 module tb;
-    reg clk = 0;
+    reg tb_clk = 0;
     reg [7:0] data;
     reg valid;
 
     initial
-        forever #5 clk=~clk;
+        forever #5 tb_clk=~tb_clk;
 
     initial 
     begin
@@ -28,9 +28,9 @@ module tb;
         $dumpvars(0, tb);
     end
 
-    filter filter0(
-        .clk(clk),
-        .data(data),
+    fir_filter filter_instance(
+        .clk(tb_clk),
+        .input_data(data),
         .input_data_flag(valid)
     );
 
