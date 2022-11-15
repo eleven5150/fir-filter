@@ -3,6 +3,10 @@ module tb;
     reg [7:0] data;
     reg valid;
 
+    localparam TB_NUM_OF_TAPS = 3;
+    localparam TB_INPUT_WIDTH = 8;
+    localparam TB_COEF_WIDTH = 8;
+
     initial
         forever #5 tb_clk=~tb_clk;
 
@@ -28,7 +32,11 @@ module tb;
         $dumpvars(0, tb);
     end
 
-    fir_filter filter_instance(
+    fir_filter #(
+            .NUM_OF_TAPS(TB_NUM_OF_TAPS),
+            .INPUT_WIDTH(TB_INPUT_WIDTH),
+            .COEF_WIDTH(TB_COEF_WIDTH)
+          ) filter_instance(
         .clk(tb_clk),
         .input_data(data),
         .input_data_flag(valid)

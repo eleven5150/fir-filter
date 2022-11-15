@@ -1,15 +1,17 @@
 module fir_filter(
     input clk,
     input signed [INPUT_WIDTH-1:0] input_data,
+    // input signed [COEF_WIDTH-1:0] input_coefs,
     input input_data_flag,
 
     output reg done_flag = 1,
     output reg signed [RESULT_WIDTH-1:0]result = 0
 );
 
+parameter NUM_OF_TAPS = 3;
 parameter INPUT_WIDTH = 8;
 parameter COEF_WIDTH = 8;
-parameter NUM_OF_TAPS = 3;
+
 localparam MULTIPLIED_WIDTH = (INPUT_WIDTH+COEF_WIDTH);
 localparam RESULT_WIDTH = (MULTIPLIED_WIDTH+NUM_OF_TAPS-1);
 
