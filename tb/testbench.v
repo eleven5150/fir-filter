@@ -24,7 +24,7 @@ module tb;
 
     initial
     begin
-        $dumpfile("dump.vcd");
+        $dumpfile("fir_filter.vcd");
         $dumpvars(0, tb);
     end
 
