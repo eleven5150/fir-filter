@@ -10,20 +10,32 @@ module tb;
     initial
         forever #5 tb_clk=~tb_clk;
 
+    integer i;
+    integer tb_data[9:0];
+
     initial 
     begin
+        tb_data[0] = 8'hDE;
+        tb_data[1] = 8'hAD;
+        tb_data[2] = 8'hBE;
+        tb_data[3] = 8'hEF;
+        tb_data[4] = 8'hCA;
+        tb_data[5] = 8'hFE;
+        tb_data[6] = 8'hBA;
+        tb_data[7] = 8'hBA;
+        tb_data[8] = 8'hDE;
+        tb_data[9] = 8'hDA;
         valid = 0;
         data = 0;
-        #5
-        valid = 1;
-        data = 17;
-        #10
-        valid = 0;
-        #90
-        valid = 1;
-        data = 18;
-        #10
-        valid = 0;
+        #5;
+        for(i = 0; i < 10; i = i + 1)
+        begin
+            data = tb_data[i];
+            valid = 1;
+            #10;
+            valid = 0;
+            #90;
+        end
     end
 
     initial

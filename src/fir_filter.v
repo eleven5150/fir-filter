@@ -1,7 +1,6 @@
 module fir_filter(
     input clk,
     input signed [INPUT_WIDTH-1:0] input_data,
-    // input signed [COEF_WIDTH-1:0] input_coefs,
     input input_data_flag,
 
     output reg done_flag = 1,
@@ -76,6 +75,7 @@ always@(posedge clk)
             end
 
 	end
+
 
 always@(posedge clk)
     begin
