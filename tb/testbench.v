@@ -1,5 +1,5 @@
 module tb;
-    reg tb_clk = 0;
+    reg tb_clk = 1;
     reg [7:0] data;
     reg valid;
 
@@ -27,7 +27,6 @@ module tb;
         tb_data[9] = 8'hDA;
         valid = 0;
         data = 0;
-        #5;
         for(i = 0; i < 10; i = i + 1)
         begin
             data = tb_data[i];
