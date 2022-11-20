@@ -19,11 +19,11 @@
 
 Первые 3 такта работы фильтра
 
-![first_3_tacts](.\images\first_3_tacts.jpg)
+![first_3_tacts](./images/first_3_tacts.jpg)
 
 Первые 5 тактов работы фильтра
 
-![first_5_tacts](.\images\first_5_tacts.jpg)
+![first_5_tacts](./images/first_5_tacts.jpg)
 
 # Модель на языке Python
 
@@ -31,7 +31,7 @@
 
 **Verilog**
 
-![first_tact](.\images\first_tact.jpg)
+![first_tact](./images/first_tact.jpg)
 
 **Python**
 
